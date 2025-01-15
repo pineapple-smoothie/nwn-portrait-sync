@@ -5,10 +5,5 @@
   <div class="card-body items-center text-center">
     <h2 class="card-title"><%= character.name %></h2>
     <p><%= character.user.email_address %></p>
-    <div class="card-actions justify-center">
-      <%= link_to "Show", character, class: "btn btn-sm btn-outline btn-info" %>
-      <%= link_to "Edit", edit_character_path(character), class: "btn btn-sm btn-outline btn-primary" %>
-      <%= button_to "Delete", character, method: :delete, class: "btn btn-sm btn-outline btn-error", form: { class: "inline" } %>
-    </div>
   </div>
 </div>

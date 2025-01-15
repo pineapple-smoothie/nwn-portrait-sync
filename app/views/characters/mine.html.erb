@@ -1,0 +1,12 @@
+<p style="color: green"><%= notice %></p>
+<% content_for :title, "My Characters" %>
+<div class="text-center mb-8">
+  <h1 class="text-3xl font-bold">My Characters</h1>
+  <%= link_to "Add new character", new_character_path, class: "btn btn-primary mt-4" %>
+</div>
+<div class="flex flex-wrap justify-center" id="characters">
+  <% @characters.each do |character| %>
+    <%= render partial: "my_character_card", locals: { character: character } %>
+  <% end %>
+</div>
+<%= paginate @characters %>

@@ -1,0 +1,17 @@
+<div class="card w-96 bg-base-100 shadow-xl m-4">
+  <figure class="px-10 pt-10">
+    <%= image_tag character.portrait.variant(:thumbnail), class: "rounded-xl" %>
+  </figure>
+  <div class="card-body items-center text-center">
+    <h2 class="card-title"><%= character.name %></h2>
+    <p><%= character.user.email_address %></p>
+    <div class="card-actions justify-center">
+      <%= link_to "Edit", edit_character_path(character), class: "btn btn-sm btn-outline btn-primary" %>
+      <%= button_to "Delete", character,
+          method: :delete,
+          class: "btn btn-sm btn-outline btn-error",
+          form: { class: "inline" },
+          data: { turbo_confirm: "Are you sure you want to delete #{character.name}? This action cannot be undone." } %>
+    </div>
+  </div>
+</div>

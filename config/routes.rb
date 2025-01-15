@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root "characters#index"
 
-  resources :characters do
+  resources :characters, except: :show do
     collection do
       get :download_all_portraits
       get :mine

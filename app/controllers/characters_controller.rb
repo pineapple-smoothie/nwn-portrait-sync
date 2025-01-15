@@ -1,27 +1,31 @@
 class CharactersController < ApplicationController
-  before_action :set_character, only: %i[ show edit update destroy ]
+  before_action :set_character, only: %i[ edit update destroy ]
+
+  after_action :verify_authorized
 
   # GET /characters or /characters.json
   def index
+    authorize Character
+
     @characters = Character.all.order(:name).page(params[:page])
   end
 
   def mine
-    @characters = current_user.characters.order(:name).page(params[:page])
-    render :index
-  end
+    authorize Character
 
-  # GET /characters/1 or /characters/1.json
-  def show
+    @characters = current_user.characters.order(:name).page(params[:page])
   end
 
   # GET /characters/new
   def new
+    authorize Character
+
     @character = Character.new
   end
 
   # GET /characters/1/edit
   def edit
+    authorize @character
   end
 
   # POST /characters or /characters.json
@@ -29,19 +33,19 @@ class CharactersController < ApplicationController
     @character = Character.new(character_params)
     @character.user = current_user
 
-    respond_to do |format|
-      if @character.save
-        format.html { redirect_to @character, notice: "Character was successfully created." }
-        format.json { render :show, status: :created, location: @character }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @character.errors, status: :unprocessable_entity }
-      end
+    authorize @character
+
+    if @character.save
+      redirect_to mine_characters_path, notice: "Character was successfully created."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /characters/1 or /characters/1.json
   def update
+    authorize @character
+
     respond_to do |format|
       if @character.update(character_params)
         format.html { redirect_to @character, notice: "Character was successfully updated." }
@@ -55,6 +59,8 @@ class CharactersController < ApplicationController
 
   # DELETE /characters/1 or /characters/1.json
   def destroy
+    authorize @character
+
     @character.destroy!
 
     respond_to do |format|
@@ -64,6 +70,8 @@ class CharactersController < ApplicationController
   end
 
   def download_all_portraits
+    authorize Character
+
     portrait_downloader = PortraitDownloader.new(Character.all)
     send_data portrait_downloader.download, filename: "all_portraits.zip"
   end
