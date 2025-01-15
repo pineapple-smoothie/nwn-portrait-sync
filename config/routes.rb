@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get "about" => "pages#about", as: :about
+
   resource :session
   resources :passwords, param: :token
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

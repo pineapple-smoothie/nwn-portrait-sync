@@ -1,32 +1,35 @@
 # Neverwinter Nights Portrait Sync
 
-This is a tool to sync character portraits for Neverwinter Nights (1) persistent
-online servers, such as [Arelith](https://nwnarelith.com/).
+## What is this?
 
-## Usage
+This is a tool allowing players to share their custom Neverwinter Nights portraits with each other on persistent servers, such as [Arelith](https://nwnarelith.com/).
 
-- Create an account
-- Create your character
-- Upload their portrait
-- Download other characters' portraits
+## Why is it necessary?
 
-## Domain
+Neverwinter Nights portraits that you create are not shared with other players by default.
 
-```mermaid
-classDiagram
-    class User {
-        id: int
-        email_address: string
-        password_digest: string
-    }
+Some great mods like [Enhanced Player Portrait Pack](https://steamcommunity.com/sharedfiles/filedetails/?id=2834893651) extend the collection of portraits available to players, but they are still limited.
 
-    class Character {
-        id: int
-        user_id: int
-        name: string
-        created_at: datetime
-        updated_at: datetime
-    }
+Additionally, there are quite complex image requirements to get portraits to display in the game. You can read an excellent guide [here](https://steamcommunity.com/sharedfiles/filedetails/?id=1344346521).
 
-    User --> Character : has_many
-```
+## How to use
+
+### Uploading your own portrait
+
+1. Create an account
+2. Create a character
+3. Upload their portrait
+4. Copy the filename prefix shown. This is what the server admins/DMs need to set your character's portrait to.
+
+### Downloading other players' portraits
+
+1. Click on the "Download All Portraits" button to download all the portraits that have been uploaded.
+2. You will get a zip file. Extract it, and copy all contained files to your portraits folder.
+
+### Where is my portraits folder?
+
+On Windows, it is located at `C:\Users\YOUR_USERNAME\Documents\Neverwinter Nights\Portraits`.
+
+On macOS, it is located at `~/Library/Application Support/Neverwinter Nights/Portraits`.
+
+On Linux, it is located at `~/.local/share/Neverwinter Nights/Portraits`.

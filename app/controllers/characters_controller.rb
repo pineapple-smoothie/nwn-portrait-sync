@@ -46,14 +46,10 @@ class CharactersController < ApplicationController
   def update
     authorize @character
 
-    respond_to do |format|
-      if @character.update(character_params)
-        format.html { redirect_to @character, notice: "Character was successfully updated." }
-        format.json { render :show, status: :ok, location: @character }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @character.errors, status: :unprocessable_entity }
-      end
+    if @character.update(character_params)
+      redirect_to mine_characters_path, notice: "Character was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
