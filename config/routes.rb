@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :characters do
     collection do
       get :download_all_portraits
+      get :mine
     end
   end
 

@@ -1,6 +1,10 @@
 <div class="navbar bg-base-100">
   <div class="flex-1">
     <%= link_to "NWN Portrait Sync", root_path, class: "btn btn-ghost text-xl" %>
+    <ul class="menu menu-horizontal px-1">
+      <li><%= link_to "All Characters", characters_path %></li>
+      <li><%= link_to "My Characters", mine_characters_path %></li>
+    </ul>
   </div>
   <div class="flex-none">
     <ul class="menu menu-horizontal px-1">

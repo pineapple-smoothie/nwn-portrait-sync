@@ -12,3 +12,8 @@ user1 = User.find_or_initialize_by(email_address: 'user1@example.com')
 user1.password = 'password'
 user1.password_confirmation = 'password'
 user1.save!
+
+user2 = User.find_or_initialize_by(email_address: 'user2@example.com')
+user2.password = 'password'
+user2.password_confirmation = 'password'
+user2.save!

@@ -3,7 +3,12 @@ class CharactersController < ApplicationController
 
   # GET /characters or /characters.json
   def index
-    @characters = Character.all
+    @characters = Character.all.order(:name).page(params[:page])
+  end
+
+  def mine
+    @characters = current_user.characters.order(:name).page(params[:page])
+    render :index
   end
 
   # GET /characters/1 or /characters/1.json
