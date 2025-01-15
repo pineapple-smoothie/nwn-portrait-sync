@@ -3,6 +3,7 @@
 <div class="text-center mb-8">
   <h1 class="text-3xl font-bold">All Characters</h1>
   <%= link_to "Download All Portraits", download_all_portraits_characters_path, class: "btn btn-accent mt-4 ml-2", data: { turbo: false } %>
+  <%= link_to "View my characters", mine_characters_path, class: "btn btn-ghost mt-4 ml-2", data: { turbo: false } %>
 </div>
 <div class="flex flex-wrap justify-center" id="characters">
   <% @characters.each do |character| %>

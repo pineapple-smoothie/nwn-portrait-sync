@@ -11,7 +11,7 @@ class PortraitDownloader
         next unless character.portrait.attached?
 
         [ :h, :l, :m, :s, :t ].each do |variant_name|
-          filename = "#{character.name}_#{variant_name}.tga"
+          filename = "#{character.filename}#{variant_name.upcase}.tga"
           zos.put_next_entry(filename)
 
           variant = character.portrait.variant(variant_name).processed

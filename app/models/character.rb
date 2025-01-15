@@ -4,6 +4,9 @@ class Character < ApplicationRecord
   has_one_attached :portrait do |attachable|
     attachable.variant :thumbnail, resize_to_fill: [ 256, 256 ], format: "png"
 
+    before_validation :generate_filename, on: [ :create, :update ]
+    validates :filename, presence: true, uniqueness: true
+
     # Resize and pad variants
     attachable.variant :h, resize_to_fill: [ 256, 400 ],
                           gravity: "North",
@@ -41,6 +44,12 @@ class Character < ApplicationRecord
   after_commit :process_variants, on: [ :create, :update ]
 
   private
+
+  def generate_filename
+    filename = self.name.parameterize(separator: "_")
+    filename += "_#{self.user.id}"
+    self.filename = filename
+  end
 
   def process_variants
     return unless portrait.attached?
