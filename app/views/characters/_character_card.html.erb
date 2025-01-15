@@ -1,0 +1,13 @@
+<div class="card w-96 bg-base-100 shadow-xl m-4">
+  <figure class="px-10 pt-10">
+    <%= image_tag character.portrait.variant(:thumbnail), class: "rounded-xl" %>
+  </figure>
+  <div class="card-body items-center text-center">
+    <h2 class="card-title"><%= character.name %></h2>
+    <div class="card-actions justify-center">
+      <%= link_to "Show", character, class: "btn btn-sm btn-outline btn-info" %>
+      <%= link_to "Edit", edit_character_path(character), class: "btn btn-sm btn-outline btn-primary" %>
+      <%= button_to "Delete", character, method: :delete, class: "btn btn-sm btn-outline btn-error", form: { class: "inline" } %>
+    </div>
+  </div>
+</div>
