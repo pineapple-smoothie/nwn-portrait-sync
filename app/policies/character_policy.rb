@@ -11,6 +11,10 @@ class CharacterPolicy < ApplicationPolicy
     true
   end
 
+  def download_all_portraits?
+    true
+  end
+
   def create?
     record.user == user
   end
