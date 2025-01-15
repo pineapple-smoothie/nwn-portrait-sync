@@ -64,23 +64,8 @@ class CharactersController < ApplicationController
   end
 
   def download_all_portraits
-    require "zip"
-
-    compressed_filestream = Zip::OutputStream.write_buffer do |zos|
-      Character.all.each do |character|
-        next unless character.portrait.attached?
-
-        [ :h, :l, :m, :s, :t ].each do |variant_name|
-          filename = "#{character.name}_#{variant_name}.tga"
-          zos.put_next_entry(filename)
-          variant = character.portrait.variant(variant_name).processed
-          zos.write variant.download
-        end
-      end
-    end
-
-    compressed_filestream.rewind
-    send_data compressed_filestream.read, filename: "all_portraits.zip"
+    portrait_downloader = PortraitDownloader.new(Character.all)
+    send_data portrait_downloader.download, filename: "all_portraits.zip"
   end
 
   private
