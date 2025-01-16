@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root "characters#index"
+  root "pages#about"
 
   resources :characters, except: :show do
     collection do

@@ -12,9 +12,16 @@
   <div class="flex-none">
     <ul class="menu menu-horizontal px-1">
       <% if authenticated? %>
-        <li><%= link_to "Logout as #{current_user.email_address}", session_path, data: { turbo_method: :delete } %></li>
+        <li>
+          <details class="dropdown">
+            <summary><%= current_user.username %></summary>
+            <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+              <li><%= link_to "Logout", session_path, data: { turbo_method: :delete } %></li>
+            </ul>
+          </details>
+        </li>
       <% else %>
-        <li><%= link_to "Login", new_session_path %></li>
+        <li><%= link_to "Sign in", new_session_path %></li>
         <li><%= link_to "Sign up", new_registration_path %></li>
       <% end %>
     </ul>

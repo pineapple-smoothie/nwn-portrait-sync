@@ -12,4 +12,8 @@ class ApplicationController < ActionController::Base
   def current_user
     @current_user ||= Current.user
   end
+
+  def after_authentication_url
+    characters_path
+  end
 end

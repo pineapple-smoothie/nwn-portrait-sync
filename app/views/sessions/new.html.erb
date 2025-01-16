@@ -2,12 +2,15 @@
   <div class="columns-1">
     <div class="card bg-base-100 w-96 shadow-xl">
       <div class="card-body">
-        <%= form_with url: session_path do |form|%>
+        <h2 class="card-title justify-center">Sign In</h2>
+        <%= form_with url: session_path do |form| %>
           <div class="mb-4">
-            <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", class: "input w-full max-w-xs", value: params[:email_address] %>
+            <%= form.label :login, "Email or Username" %>
+            <%= form.text_field :login, required: true, autofocus: true, autocomplete: "username", class: "input w-full max-w-xs", value: params[:login] %>
           </div>
           <div class="mb-4">
-            <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72, class: "input w-full max-w-xs" %>
+            <%= form.label :password, "Password" %>
+            <%= form.password_field :password, required: true, autocomplete: "current-password", maxlength: 72, class: "input w-full max-w-xs" %>
           </div>
           <div class="flex justify-center">
             <%= form.submit "Sign in", class: "btn btn-primary btn-wide" %>

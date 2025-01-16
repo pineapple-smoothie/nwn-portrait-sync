@@ -68,6 +68,8 @@ class CharactersController < ApplicationController
   def download_all_portraits
     authorize Character
 
+    current_user.downloads.create!
+
     portrait_downloader = PortraitDownloader.new(Character.all)
     send_data portrait_downloader.download, filename: "all_portraits.zip"
   end

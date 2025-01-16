@@ -1,36 +1,90 @@
-<div class="mb-8">
-  <h1 class="text-3xl font-bold">What is this?</h1>
-  <p>This is a tool allowing players to share their custom Neverwinter Nights portraits with each other on persistent servers, such as <a href="https://nwnarelith.com/" class="btn-link" target="_blank">Arelith</a>.</p>
-</div>
-<div class="mb-8">
-  <h1 class="text-3xl font-bold">Why is it necessary?</h1>
-  <p>Neverwinter Nights portraits that you create are not shared with other players by default.</p>
-  <p>Some great mods like <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2834893651" class="btn-link" target="_blank">Enhanced Player Portrait Pack</a> extend the collection of portraits available to players, but they are still limited.</p>
-  <p>Additionally, there are quite complex image requirements to get portraits to display in the game. You can read an excellent guide <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=1344346521" class="btn-link" target="_blank">here</a>.</p>
-</div>
-<div class="mb-8">
-  <h2 class="text-2xl font-bold">How to use</h2>
-</div>
-<div class="mb-8">
-  <h3 class="text-xl font-bold">Uploading your own portrait</h3>
-  <ol class="list-decimal ml-5">
-    <li>Create an account</li>
-    <li>Create a character</li>
-    <li>Upload their portrait</li>
-    <li>Copy the filename prefix shown. This is what the server admins/DMs need to set your character's portrait to.</li>
-  </ol>
-</div>
-<div class="mb-8">
-  <h3 class="text-xl font-bold">Downloading other players' portraits</h3>
-  <ol class="list-decimal ml-5">
-    <li>Click on the "Download All Portraits" button to download all the portraits that have been uploaded.</li>
-    <li>You will get a zip file. Extract it, and copy all contained files to your portraits folder.</li>
-  </ol>
-</div>
-<div class="mb-8">
-  <h3 class="text-xl font-bold">Where is my portraits folder?</h3>
-  <p>On Windows, it is located at <code>C:\Users\YOUR_USERNAME\Documents\Neverwinter Nights\Portraits</code>.</p>
-  <p>On macOS, it is located at <code>~/Library/Application Support/Neverwinter Nights/Portraits</code>.</p>
-  <p>On Linux, it is located at <code>~/.local/share/Neverwinter Nights/Portraits</code>.</p>
-</div>
+<div class="max-w-3xl mx-auto px-4 py-8">
+  <!-- Hero section -->
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-bold text-primary mb-4">Neverwinter Nights Portrait Sync</h1>
+    <p class="text-xl">Share your custom Neverwinter Nights portraits with other players on persistent servers like <a href="https://nwnarelith.com/" class="link link-primary" target="_blank">Arelith</a>.</p>
+  </div>
+  <!-- Quick start buttons -->
+  <div class="flex justify-center gap-4 mb-12">
+    <% if authenticated? %>
+      <%= link_to "Continue to App", characters_path, class: "btn btn-primary btn-lg" %>
+    <% else %>
+      <%= link_to "Sign Up", new_registration_path, class: "btn btn-primary btn-lg" %>
+      <%= link_to "Sign In", new_session_path, class: "btn btn-outline btn-lg" %>
+    <% end %>
+  </div>
+  <div class="card bg-base-200 mb-12">
+    <div class="card-body">
+      <h2 class="card-title text-2xl">Some stats</h2>
+      <div class="stats shadow">
+        <div class="stat">
+          <div class="stat-title"><%= phosphor_icon "users", height: 48 %> Users</div>
+          <div class="stat-value"><%= User.count %></div>
+        </div>
+        <div class="stat">
+          <div class="stat-title"><%= phosphor_icon "mask-happy", height: 48 %> Characters</div>
+          <div class="stat-value"><%= Character.count %></div>
+        </div>
+        <div class="stat">
+          <div class="stat-title"><%= phosphor_icon "download", height: 48 %> Total downloads</div>
+          <div class="stat-value"><%= Download.count %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Features grid -->
+  <div class="grid md:grid-cols-2 gap-8 mb-12">
+    <div class="card bg-base-200">
+      <div class="card-body">
+        <h2 class="card-title text-2xl">Upload Your Portrait</h2>
+        <ol class="list-decimal ml-5 space-y-2">
+          <li><%= link_to "Create an account", new_registration_path, class: 'link' %></li>
+          <li>Create a character</li>
+          <li>Upload their portrait</li>
+          <li>Share the filename with your DM</li>
+        </ol>
+      </div>
+    </div>
+    <div class="card bg-base-200">
+      <div class="card-body">
+        <h2 class="card-title text-2xl">Download Portraits</h2>
+        <ol class="list-decimal ml-5 space-y-2">
+          <li><%= link_to "Create an account", new_registration_path, class: 'link' %></li>
+          <li>Click "Download All Portraits"</li>
+          <li>Extract the zip file</li>
+          <li>Copy files to your portraits folder</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <!-- Portrait folder locations -->
+  <div class="card bg-base-200">
+    <div class="card-body">
+      <h2 class="card-title text-2xl mb-4">Portrait Folder Location</h2>
+      <div class="grid gap-4">
+        <div>
+          <span class="font-bold">Windows:</span>
+          <code class="block bg-base-300 p-2 rounded mt-1">C:\Users\YOUR_USERNAME\Documents\Neverwinter Nights\Portraits</code>
+        </div>
+        <div>
+          <span class="font-bold">macOS:</span>
+          <code class="block bg-base-300 p-2 rounded mt-1">~/Library/Application Support/Neverwinter Nights/Portraits</code>
+        </div>
+        <div>
+          <span class="font-bold">Linux:</span>
+          <code class="block bg-base-300 p-2 rounded mt-1">~/.local/share/Neverwinter Nights/Portraits</code>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Additional resources -->
+  <div class="mt-8 text-center">
+    <p class="text-sm text-gray-500">
+      Also check out the <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2834893651" class="link link-primary" target="_blank">Enhanced Player Portrait Pack</a> to extend the vanilla portrait options.
+    </p>
+    <p class="text-sm text-gray-500">
+      Need help with portrait requirements? Check out this
+      <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=1344346521" class="link link-primary" target="_blank">excellent guide</a>.
+    </p>
+  </div>
 </div>
