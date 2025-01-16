@@ -71,3 +71,5 @@ gem "erb_lint", "~> 0.8.0"
 gem "kaminari", "~> 1.2"
 
 gem "pundit", "~> 2.4"
+
+gem "phosphor_icons", "~> 0.3.0"

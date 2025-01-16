@@ -1,0 +1,7 @@
+<p>Welcome to Neverwinter Nights Portrait Sync! Please confirm your email address by clicking the link below:</p>
+<p>
+  <%= link_to "Confirm my account",
+      confirm_registrations_url(token: @user.confirmation_token),
+      class: "btn btn-primary" %>
+</p>
+<p>This link will expire in 48 hours.</p>

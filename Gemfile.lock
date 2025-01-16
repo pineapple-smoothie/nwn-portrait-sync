@@ -225,10 +225,16 @@ GEM
     nokogiri (1.18.1-x86_64-linux-musl)
       racc (~> 1.4)
     ostruct (0.6.1)
+    ox (2.14.20)
+      bigdecimal (>= 3.0)
     parallel (1.26.3)
     parser (3.3.6.0)
       ast (~> 2.4.1)
       racc
+    phosphor_icons (0.3.0)
+      actionview
+      ox (~> 2.14)
+      railties
     propshaft (1.1.0)
       actionpack (>= 7.0.0)
       activesupport (>= 7.0.0)
@@ -419,6 +425,7 @@ DEPENDENCIES
   kamal
   kaminari (~> 1.2)
   mini_magick
+  phosphor_icons (~> 0.3.0)
   propshaft
   puma (>= 5.0)
   pundit (~> 2.4)

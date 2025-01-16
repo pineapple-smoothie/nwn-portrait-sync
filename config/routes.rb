@@ -8,6 +8,10 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :registrations, only: [ :new, :create ] do
+    get :confirm, on: :collection
+  end
+
   get "about" => "pages#about", as: :about
 
   resource :session

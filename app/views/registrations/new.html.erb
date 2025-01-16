@@ -1,0 +1,46 @@
+<div class="min-h-screen flex items-center justify-center">
+  <div class="columns-1">
+    <div class="card bg-base-100 w-96 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title justify-center">Sign Up</h2>
+        <%= tag.div(flash[:alert], class: "alert alert-error") if flash[:alert] %>
+        <%= form_with(model: @user, url: registrations_path) do |form| %>
+          <% if @user.errors.any? %>
+            <div class="alert alert-error">
+              <ul>
+                <% @user.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <div class="mb-4">
+            <%= form.email_field :email_address,
+                required: true,
+                autofocus: true,
+                class: "input w-full max-w-xs",
+                placeholder: "Email address" %>
+          </div>
+          <div class="mb-4">
+            <%= form.password_field :password,
+                required: true,
+                class: "input w-full max-w-xs",
+                placeholder: "Password (minimum 8 characters)" %>
+          </div>
+          <div class="mb-4">
+            <%= form.password_field :password_confirmation,
+                required: true,
+                class: "input w-full max-w-xs",
+                placeholder: "Confirm password" %>
+          </div>
+          <div class="flex justify-center">
+            <%= form.submit "Sign up", class: "btn btn-primary btn-wide" %>
+          </div>
+        <% end %>
+        <div class="text-center mt-4">
+          Already have an account? <%= link_to "Sign in", new_session_path, class: "btn btn-link" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
