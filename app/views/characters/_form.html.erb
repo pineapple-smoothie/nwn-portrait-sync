@@ -21,6 +21,13 @@
               placeholder: "Enter character name" %>
         </div>
         <div class="form-control w-full">
+          <%= form.label :filename, class: "label" %>
+          <%= form.text_field :filename,
+              class: "input input-bordered w-full",
+              placeholder: "Filename" %>
+          <p class="text-sm text-gray-500 mt-1">If you already use a custom portrait filename, enter it here. If you don't, leave it blank and one will be generated for you.</p>
+        </div>
+        <div class="form-control w-full">
           <%= form.label :portrait, class: "label" %>
           <%= form.file_field :portrait, class: "file-input file-input-bordered w-full max-w-xs" %>
         </div>

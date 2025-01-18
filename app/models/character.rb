@@ -4,7 +4,7 @@ class Character < ApplicationRecord
   has_one_attached :portrait do |attachable|
     attachable.variant :thumbnail, resize_to_fill: [ 256, 256 ], format: "png"
 
-    before_validation :generate_filename, on: [ :create, :update ]
+    before_validation :generate_filename, on: [ :create ]
     validates :filename, presence: true, uniqueness: true
 
     # Resize and pad variants
@@ -46,6 +46,8 @@ class Character < ApplicationRecord
   private
 
   def generate_filename
+    return if self.filename.present?
+
     filename = self.name.parameterize(separator: "_")
     filename += "_#{self.user.id}"
     self.filename = filename
