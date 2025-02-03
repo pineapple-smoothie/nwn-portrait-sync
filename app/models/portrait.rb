@@ -3,12 +3,11 @@ class Portrait < ApplicationRecord
 
   has_one_attached :file do |attachable|
     # Create web-friendly variants for each portrait size
-    attachable.variant :web_huge, resize_to_fill: [ 256, 512 ], format: :webp
-    attachable.variant :web_large, resize_to_fill: [ 128, 256 ], format: :webp
-    attachable.variant :web_medium, resize_to_fill: [ 64, 128 ], format: :webp
-    attachable.variant :web_small, resize_to_fill: [ 32, 64 ], format: :webp
-    attachable.variant :web_tiny, resize_to_fill: [ 16, 32 ], format: :webp
-    attachable.variant :thumbnail, resize_to_fill: [ 256, 256 ], format: :webp
+    attachable.variant :web_huge, format: :webp
+    attachable.variant :web_large, format: :webp
+    attachable.variant :web_medium, format: :webp
+    attachable.variant :web_small, format: :webp
+    attachable.variant :web_tiny, format: :webp
   end
 
   after_commit :process_variants, on: [ :create, :update ]
@@ -17,27 +16,37 @@ class Portrait < ApplicationRecord
     huge: {
       name: "Huge",
       width: 256,
-      height: 512
+      height: 512,
+      display_width: 256,
+      display_height: 400
     },
     large: {
       name: "Large",
       width: 128,
-      height: 256
+      height: 256,
+      display_width: 128,
+      display_height: 200
     },
     medium: {
       name: "Medium",
       width: 64,
-      height: 128
+      height: 128,
+      display_width: 64,
+      display_height: 100
     },
     small: {
       name: "Small",
       width: 32,
-      height: 64
+      height: 64,
+      display_width: 32,
+      display_height: 50
     },
     tiny: {
       name: "Tiny",
       width: 16,
-      height: 32
+      height: 32,
+      display_width: 16,
+      display_height: 25
     }
   }.freeze
 
@@ -56,7 +65,7 @@ class Portrait < ApplicationRecord
     "web_#{size}".to_sym
   end
 
-  def processed_image
+  def web_image
     if file.attached?
       if file.blob.content_type == "image/x-tga"
         # For TGA files, we need to convert to PNG first
@@ -89,7 +98,7 @@ class Portrait < ApplicationRecord
 
         # Create variant from the PNG version
         variant = png_blob.variant(
-          resize_to_fill: [ size_dimensions[:width], size_dimensions[:height] ],
+          resize_to_fill: [ size_dimensions[:display_width], size_dimensions[:display_height], { gravity: "north" } ],
           format: :webp
         ).processed
 
@@ -121,7 +130,7 @@ class Portrait < ApplicationRecord
     return unless file.attached?
 
     # Trigger variant processing in the background
-    processed_image if file.blob.content_type == "image/x-tga"
+    web_image if file.blob.content_type == "image/x-tga"
   end
 
   def convert_to_tga

@@ -5,20 +5,11 @@
 <div class="flex justify-center">
   <div class="w-full max-w-2xl">
     <div class="mb-4">
-      <strong>Name:</strong>
-      <%= @character.name %>
-    </div>
-    <div class="mb-4">
-      <strong>Filename:</strong>
-      <%= @character.filename %>
-    </div>
-    <div class="mb-4">
-      <strong>Portrait Images:</strong>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 gap-5">
         <% @character.portraits.each do |portrait| %>
           <div class="text-center">
-            <%= image_tag portrait.processed_image, alt: "#{portrait.size} portrait" %>
-            <p><%= portrait.size.capitalize %> - <%= portrait.size_dimensions[:width] %>x<%= portrait.size_dimensions[:height] %> pixels</p>
+            <div class="divider"><%= portrait.size.capitalize %> - <%= portrait.size_dimensions[:width] %>x<%= portrait.size_dimensions[:height] %></div>
+            <%= image_tag portrait.web_image, alt: "#{portrait.size} portrait", class: "mx-auto" %>
           </div>
         <% end %>
       </div>

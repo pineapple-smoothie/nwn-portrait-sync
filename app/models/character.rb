@@ -8,7 +8,7 @@ class Character < ApplicationRecord
   before_validation :generate_filename, on: :create
 
   validates :name, presence: true, uniqueness: { scope: :server_id, message: "has already been taken on this server" }
-  validates :filename, presence: true, uniqueness: true
+  validates :filename, presence: true, uniqueness: true, length: { maximum: 12 }
 
   private
 
