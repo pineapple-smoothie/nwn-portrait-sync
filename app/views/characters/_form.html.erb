@@ -39,40 +39,14 @@
             If you don't upload an image for a size, a default portrait will be used.
           </p>
           <div class="space-y-4">
-            <%= form.fields_for :portraits, character.portraits.find_or_initialize_by(size: :huge) do |portrait_form| %>
-              <div class="form-control">
-                <%= portrait_form.label :file, "Huge Portrait (TGA file, 256x512)", class: "label" %>
-                <%= portrait_form.file_field :file, class: "file-input file-input-bordered w-full", accept: ".tga" %>
-                <%= portrait_form.hidden_field :size, value: :huge %>
-              </div>
-            <% end %>
-            <%= form.fields_for :portraits, character.portraits.find_or_initialize_by(size: :large) do |portrait_form| %>
-              <div class="form-control">
-                <%= portrait_form.label :file, "Large Portrait (TGA file, 128x256)", class: "label" %>
-                <%= portrait_form.file_field :file, class: "file-input file-input-bordered w-full", accept: ".tga" %>
-                <%= portrait_form.hidden_field :size, value: :large %>
-              </div>
-            <% end %>
-            <%= form.fields_for :portraits, character.portraits.find_or_initialize_by(size: :medium) do |portrait_form| %>
-              <div class="form-control">
-                <%= portrait_form.label :file, "Medium Portrait (TGA file, 64x128)", class: "label" %>
-                <%= portrait_form.file_field :file, class: "file-input file-input-bordered w-full", accept: ".tga" %>
-                <%= portrait_form.hidden_field :size, value: :medium %>
-              </div>
-            <% end %>
-            <%= form.fields_for :portraits, character.portraits.find_or_initialize_by(size: :small) do |portrait_form| %>
-              <div class="form-control">
-                <%= portrait_form.label :file, "Small Portrait (TGA file, 32x64)", class: "label" %>
-                <%= portrait_form.file_field :file, class: "file-input file-input-bordered w-full", accept: ".tga" %>
-                <%= portrait_form.hidden_field :size, value: :small %>
-              </div>
-            <% end %>
-            <%= form.fields_for :portraits, character.portraits.find_or_initialize_by(size: :tiny) do |portrait_form| %>
-              <div class="form-control">
-                <%= portrait_form.label :file, "Tiny Portrait (TGA file, 16x32)", class: "label" %>
-                <%= portrait_form.file_field :file, class: "file-input file-input-bordered w-full", accept: ".tga" %>
-                <%= portrait_form.hidden_field :size, value: :tiny %>
-              </div>
+            <% Portrait::TYPES.each do |size, dimensions| %>
+              <%= form.fields_for :portraits, character.portraits.find_or_initialize_by(size: size) do |portrait_form| %>
+                <div class="form-control">
+                  <%= portrait_form.label :file, "#{dimensions[:name]} Portrait (TGA file, #{dimensions[:width]}x#{dimensions[:height]})", class: "label" %>
+                  <%= portrait_form.file_field :file, class: "file-input file-input-bordered w-full", accept: ".tga" %>
+                  <%= portrait_form.hidden_field :size, value: size %>
+                </div>
+              <% end %>
             <% end %>
           </div>
         </div>

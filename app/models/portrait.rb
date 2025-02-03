@@ -15,6 +15,8 @@ class Portrait < ApplicationRecord
   TYPES = {
     huge: {
       name: "Huge",
+      abbreviation: "H",
+      fallback_image: "fallback_H.webp",
       width: 256,
       height: 512,
       display_width: 256,
@@ -22,6 +24,8 @@ class Portrait < ApplicationRecord
     },
     large: {
       name: "Large",
+      abbreviation: "L",
+      fallback_image: "fallback_L.webp",
       width: 128,
       height: 256,
       display_width: 128,
@@ -29,6 +33,8 @@ class Portrait < ApplicationRecord
     },
     medium: {
       name: "Medium",
+      abbreviation: "M",
+      fallback_image: "fallback_M.webp",
       width: 64,
       height: 128,
       display_width: 64,
@@ -36,6 +42,8 @@ class Portrait < ApplicationRecord
     },
     small: {
       name: "Small",
+      abbreviation: "S",
+      fallback_image: "fallback_S.webp",
       width: 32,
       height: 64,
       display_width: 32,
@@ -43,6 +51,8 @@ class Portrait < ApplicationRecord
     },
     tiny: {
       name: "Tiny",
+      abbreviation: "T",
+      fallback_image: "fallback_T.webp",
       width: 16,
       height: 32,
       display_width: 16,
@@ -57,7 +67,7 @@ class Portrait < ApplicationRecord
 
   enum :size, [ :huge, :large, :medium, :small, :tiny ]
 
-  def size_dimensions
+  def type
     TYPES[size.to_sym]
   end
 
@@ -98,7 +108,7 @@ class Portrait < ApplicationRecord
 
         # Create variant from the PNG version
         variant = png_blob.variant(
-          resize_to_fill: [ size_dimensions[:display_width], size_dimensions[:display_height], { gravity: "north" } ],
+          resize_to_fill: [ type[:display_width], type[:display_height], { gravity: "north" } ],
           format: :webp
         ).processed
 
@@ -109,7 +119,7 @@ class Portrait < ApplicationRecord
       end
     else
       # Return the fallback image path
-      ActionController::Base.helpers.asset_path("fallback.webp")
+      ActionController::Base.helpers.asset_path(type[:fallback_image])
     end
   end
 
@@ -119,8 +129,7 @@ class Portrait < ApplicationRecord
     if file.blob.content_type == "image/x-tga"
       file
     else
-      # If somehow the file isn't a TGA, convert it to TGA
-      convert_to_tga
+      nil
     end
   end
 
@@ -131,31 +140,5 @@ class Portrait < ApplicationRecord
 
     # Trigger variant processing in the background
     web_image if file.blob.content_type == "image/x-tga"
-  end
-
-  def convert_to_tga
-    # Create a temporary file with the original extension
-    temp_file = Tempfile.new([ "portrait", File.extname(file.filename.to_s) ])
-    temp_file.binmode
-    temp_file.write(file.download)
-    temp_file.rewind
-
-    # Process with MiniMagick
-    img = MiniMagick::Image.open(temp_file.path)
-    img.format "tga"
-
-    # Create a new blob for the converted image
-    converted_blob = ActiveStorage::Blob.create_and_upload!(
-      io: StringIO.new(img.to_blob),
-      filename: "#{file.filename.base}.tga",
-      content_type: "image/x-tga"
-    )
-
-    # Clean up
-    temp_file.close
-    temp_file.unlink
-
-    # Return the blob
-    converted_blob
   end
 end

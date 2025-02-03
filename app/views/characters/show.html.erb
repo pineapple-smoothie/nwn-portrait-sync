@@ -8,7 +8,7 @@
       <div class="grid grid-cols-1 gap-5">
         <% @character.portraits.each do |portrait| %>
           <div class="text-center">
-            <div class="divider"><%= portrait.size.capitalize %> - <%= portrait.size_dimensions[:width] %>x<%= portrait.size_dimensions[:height] %></div>
+            <div class="divider"><%= portrait.size.capitalize %> - <%= portrait.type[:width] %>x<%= portrait.type[:height] %></div>
             <%= image_tag portrait.web_image, alt: "#{portrait.size} portrait", class: "mx-auto" %>
           </div>
         <% end %>
