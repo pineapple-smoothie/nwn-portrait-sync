@@ -44,7 +44,7 @@ class CharactersController < ApplicationController
     authorize @character
 
     if @character.save
-      redirect_to mine_characters_path, notice: "Character was successfully created."
+      redirect_to character_path(@character), notice: "Character was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -55,7 +55,7 @@ class CharactersController < ApplicationController
     authorize @character
 
     if @character.update(character_params)
-      redirect_to mine_characters_path, notice: "Character was successfully updated."
+      redirect_to character_path(@character), notice: "Character was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
