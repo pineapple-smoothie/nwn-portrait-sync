@@ -1,6 +1,7 @@
 <%= render "character_card_base", character: character do %>
   <div class="card-actions justify-center">
     <%= link_to "View", character_path(character), class: "btn btn-sm btn-outline btn-primary" %>
+    <%= link_to "Edit", edit_character_path(character), class: "btn btn-sm btn-outline btn-primary" %>
     <%= button_to "Delete", character,
           method: :delete,
           class: "btn btn-sm btn-outline btn-error",

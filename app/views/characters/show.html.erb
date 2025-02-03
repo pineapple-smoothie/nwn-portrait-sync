@@ -16,14 +16,17 @@
       <strong>Portrait Images:</strong>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <% @character.portraits.each do |portrait| %>
-          <% if portrait.file.attached? %>
-            <div class="text-center">
-              <%= image_tag portrait.processed_image, alt: "#{portrait.size} portrait" %>
-              <p><%= portrait.size.capitalize %> - <%= portrait.size_dimensions[:width] %>x<%= portrait.size_dimensions[:height] %> pixels</p>
-            </div>
-          <% end %>
+          <div class="text-center">
+            <%= image_tag portrait.processed_image, alt: "#{portrait.size} portrait" %>
+            <p><%= portrait.size.capitalize %> - <%= portrait.size_dimensions[:width] %>x<%= portrait.size_dimensions[:height] %> pixels</p>
+          </div>
         <% end %>
       </div>
     </div>
+    <% if policy(@character).edit? %>
+      <div class="card-actions justify-end mt-6">
+        <%= link_to "Edit Character", edit_character_path(@character), class: "btn btn-primary" %>
+      </div>
+    <% end %>
   </div>
 </div>

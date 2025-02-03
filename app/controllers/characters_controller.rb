@@ -21,7 +21,7 @@ class CharactersController < ApplicationController
     authorize Character
 
     @character = Character.new
-    %w[huge].each do |size|
+    %w[huge large medium small tiny].each do |size|
       @character.portraits.build(size: size)
     end
   end
@@ -96,7 +96,8 @@ class CharactersController < ApplicationController
           :name,
           :user_id,
           :filename,
-          :server_id
+          :server_id,
+          portraits_attributes: [ :id, :file, :size ]
         )
     end
 end

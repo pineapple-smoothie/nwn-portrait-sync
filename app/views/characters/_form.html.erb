@@ -21,15 +21,60 @@
               placeholder: "Enter character name" %>
         </div>
         <div class="form-control w-full mt-5">
+          <%= form.label :server_id, "Server", class: "label" %>
+          <%= form.collection_select :server_id, Server.order(:name), :id, :name, { selected: Server.order(:name).first&.id }, class: "select select-bordered w-full" %>
+        </div>
+        <div class="form-control w-full mt-5">
           <%= form.label :filename, "Filename (optional)", class: "label" %>
           <p class="text-sm text-gray-500 my-2">If you already know your custom portrait filename, enter it here. If you don't, leave it blank and one will be generated for you.</p>
           <%= form.text_field :filename,
               class: "input input-bordered w-full",
               placeholder: "Example: clssorcerer_" %>
         </div>
+        <div class="divider"></div>
         <div class="form-control w-full mt-5">
-          <%= form.label :server_id, "Server", class: "label" %>
-          <%= form.collection_select :server_id, Server.order(:name), :id, :name, { selected: Server.order(:name).first&.id }, class: "select select-bordered w-full" %>
+          <h3 class="text-lg font-semibold mb-2">Portrait Images</h3>
+          <p class="text-sm text-gray-500 mb-4">
+            Upload TGA format images for each portrait size. Images will be automatically resized to the correct dimensions.
+            If you don't upload an image for a size, a default portrait will be used.
+          </p>
+          <div class="space-y-4">
+            <%= form.fields_for :portraits, character.portraits.find_or_initialize_by(size: :huge) do |portrait_form| %>
+              <div class="form-control">
+                <%= portrait_form.label :file, "Huge Portrait (TGA file, 256x512)", class: "label" %>
+                <%= portrait_form.file_field :file, class: "file-input file-input-bordered w-full", accept: ".tga" %>
+                <%= portrait_form.hidden_field :size, value: :huge %>
+              </div>
+            <% end %>
+            <%= form.fields_for :portraits, character.portraits.find_or_initialize_by(size: :large) do |portrait_form| %>
+              <div class="form-control">
+                <%= portrait_form.label :file, "Large Portrait (TGA file, 128x256)", class: "label" %>
+                <%= portrait_form.file_field :file, class: "file-input file-input-bordered w-full", accept: ".tga" %>
+                <%= portrait_form.hidden_field :size, value: :large %>
+              </div>
+            <% end %>
+            <%= form.fields_for :portraits, character.portraits.find_or_initialize_by(size: :medium) do |portrait_form| %>
+              <div class="form-control">
+                <%= portrait_form.label :file, "Medium Portrait (TGA file, 64x128)", class: "label" %>
+                <%= portrait_form.file_field :file, class: "file-input file-input-bordered w-full", accept: ".tga" %>
+                <%= portrait_form.hidden_field :size, value: :medium %>
+              </div>
+            <% end %>
+            <%= form.fields_for :portraits, character.portraits.find_or_initialize_by(size: :small) do |portrait_form| %>
+              <div class="form-control">
+                <%= portrait_form.label :file, "Small Portrait (TGA file, 32x64)", class: "label" %>
+                <%= portrait_form.file_field :file, class: "file-input file-input-bordered w-full", accept: ".tga" %>
+                <%= portrait_form.hidden_field :size, value: :small %>
+              </div>
+            <% end %>
+            <%= form.fields_for :portraits, character.portraits.find_or_initialize_by(size: :tiny) do |portrait_form| %>
+              <div class="form-control">
+                <%= portrait_form.label :file, "Tiny Portrait (TGA file, 16x32)", class: "label" %>
+                <%= portrait_form.file_field :file, class: "file-input file-input-bordered w-full", accept: ".tga" %>
+                <%= portrait_form.hidden_field :size, value: :tiny %>
+              </div>
+            <% end %>
+          </div>
         </div>
         <div class="card-actions justify-end mt-6">
           <%= form.submit class: "btn btn-primary" %>
