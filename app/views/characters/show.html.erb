@@ -1,0 +1,23 @@
+<% content_for :title, @character.name %>
+<div class="text-center mb-8">
+  <h1 class="text-3xl font-bold"><%= @character.name %></h1>
+</div>
+<div class="flex justify-center">
+  <div class="w-full max-w-2xl">
+    <div class="mb-4">
+      <div class="grid grid-cols-1 gap-5">
+        <% @character.portraits.each do |portrait| %>
+          <div class="text-center">
+            <div class="divider"><%= portrait.size.capitalize %> - <%= portrait.size_dimensions[:width] %>x<%= portrait.size_dimensions[:height] %></div>
+            <%= image_tag portrait.web_image, alt: "#{portrait.size} portrait", class: "mx-auto" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <% if policy(@character).edit? %>
+      <div class="card-actions justify-end mt-6">
+        <%= link_to "Edit Character", edit_character_path(@character), class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -7,11 +7,21 @@
          when "info" then "alert alert-info"
          else "alert alert-warning"
          end %>
-      <div class="<%= alert_class %> shadow-lg">
+      <div class="<%= alert_class %> shadow-lg relative">
         <div>
           <span><%= message %></span>
+          <button class="close-button" onclick="this.parentElement.parentElement.style.display='none';">&times;</button>
         </div>
       </div>
     <% end %>
   </div>
 <% end %>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    setTimeout(function() {
+      document.querySelectorAll('.toast .alert').forEach(function(alert) {
+        alert.style.display = 'none';
+      });
+    }, 5000); // 5000 milliseconds = 5 seconds
+  });
+</script>

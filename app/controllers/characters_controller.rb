@@ -1,5 +1,5 @@
 class CharactersController < ApplicationController
-  before_action :set_character, only: %i[ edit update destroy ]
+  before_action :set_character, only: %i[ edit update destroy show ]
 
   after_action :verify_authorized
 
@@ -21,6 +21,14 @@ class CharactersController < ApplicationController
     authorize Character
 
     @character = Character.new
+    %w[huge large medium small tiny].each do |size|
+      @character.portraits.build(size: size)
+    end
+  end
+
+  # GET /characters/1
+  def show
+    authorize @character
   end
 
   # GET /characters/1/edit
@@ -36,7 +44,7 @@ class CharactersController < ApplicationController
     authorize @character
 
     if @character.save
-      redirect_to mine_characters_path, notice: "Character was successfully created."
+      redirect_to character_path(@character), notice: "Character was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -47,7 +55,7 @@ class CharactersController < ApplicationController
     authorize @character
 
     if @character.update(character_params)
-      redirect_to mine_characters_path, notice: "Character was successfully updated."
+      redirect_to character_path(@character), notice: "Character was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -60,7 +68,7 @@ class CharactersController < ApplicationController
     @character.destroy!
 
     respond_to do |format|
-      format.html { redirect_to characters_path, status: :see_other, notice: "Character was successfully destroyed." }
+      format.html { redirect_to mine_characters_path, status: :see_other, notice: "Character was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -82,6 +90,14 @@ class CharactersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def character_params
-      params.expect(character: [ :name, :user_id, :portrait ])
+      params
+        .require(:character)
+        .permit(
+          :name,
+          :user_id,
+          :filename,
+          :server_id,
+          portraits_attributes: [ :id, :file, :size ]
+        )
     end
 end

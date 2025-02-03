@@ -9,7 +9,7 @@ class AttachedValidator < ActiveModel::EachValidator
 
     if value.attached? && options[:content_type]
       unless value.content_type.in?(Array(options[:content_type]))
-        record.errors.add(attribute, :content_type, message: "must be a JPEG image")
+        record.errors.add(attribute, :content_type, message: "must be an image in TGA format")
       end
     end
   end
