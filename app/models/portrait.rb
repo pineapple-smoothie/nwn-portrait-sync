@@ -10,7 +10,16 @@ class Portrait < ApplicationRecord
     attachable.variant :web_tiny, format: :webp
   end
 
+  enum :size, [ :huge, :large, :medium, :small, :tiny ]
+
   after_commit :process_variants, on: [ :create, :update ]
+
+  validates :file, attached: false
+  validates :file, content_type: { in: [ :tga ], spoofing_protection: true }
+  validates :file, dimension: {
+    width: { min: ->(record) { record.type[:width] },   max: ->(record) { record.type[:width] } },
+    height: { min: ->(record) { record.type[:height] }, max: ->(record) { record.type[:height] } }
+  }, if: :file_attached?
 
   TYPES = {
     huge: {
@@ -60,12 +69,6 @@ class Portrait < ApplicationRecord
     }
   }.freeze
 
-  validates :file, attached: {
-    required: false,
-    content_type: [ "image/x-targa", "image/x-tga" ]
-  }
-
-  enum :size, [ :huge, :large, :medium, :small, :tiny ]
 
   def type
     TYPES[size.to_sym]
@@ -75,7 +78,7 @@ class Portrait < ApplicationRecord
     "web_#{size}".to_sym
   end
 
-  def web_image
+  def web_variant
     if file.attached?
       if file.blob.content_type == "image/x-tga"
         # For TGA files, we need to convert to PNG first
@@ -123,22 +126,16 @@ class Portrait < ApplicationRecord
     end
   end
 
-  def download_tga
-    return nil unless file.attached?
-
-    if file.blob.content_type == "image/x-tga"
-      file
-    else
-      nil
-    end
-  end
-
   private
+
+  def file_attached?
+    file.attached?
+  end
 
   def process_variants
     return unless file.attached?
 
     # Trigger variant processing in the background
-    web_image if file.blob.content_type == "image/x-tga"
+    web_variant if file.blob.content_type == "image/x-tga"
   end
 end

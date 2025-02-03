@@ -73,3 +73,5 @@ gem "kaminari", "~> 1.2"
 gem "pundit", "~> 2.4"
 
 gem "phosphor_icons", "~> 0.3.0"
+
+gem "active_storage_validations"

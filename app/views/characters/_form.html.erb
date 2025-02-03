@@ -17,19 +17,36 @@
         <div class="form-control w-full mt-5">
           <%= form.label :name, class: "label" %>
           <%= form.text_field :name,
-              class: "input input-bordered w-full",
+              class: "input input-bordered w-full #{'input-error' if character.errors[:name].any?}",
               placeholder: "Enter character name" %>
+          <% if character.errors[:name].any? %>
+            <div class="text-error text-sm mt-1">
+              <%= character.errors[:name].join(", ") %>
+            </div>
+          <% end %>
         </div>
         <div class="form-control w-full mt-5">
           <%= form.label :server_id, "Server", class: "label" %>
-          <%= form.collection_select :server_id, Server.order(:name), :id, :name, { selected: Server.order(:name).first&.id }, class: "select select-bordered w-full" %>
+          <%= form.collection_select :server_id, Server.order(:name), :id, :name,
+              { selected: Server.order(:name).first&.id },
+              class: "select select-bordered w-full #{'select-error' if character.errors[:server_id].any?}" %>
+          <% if character.errors[:server_id].any? %>
+            <div class="text-error text-sm mt-1">
+              <%= character.errors[:server_id].join(", ") %>
+            </div>
+          <% end %>
         </div>
         <div class="form-control w-full mt-5">
           <%= form.label :filename, "Filename (optional)", class: "label" %>
           <p class="text-sm text-gray-500 my-2">If you already know your custom portrait filename, enter it here. If you don't, leave it blank and one will be generated for you.</p>
           <%= form.text_field :filename,
-              class: "input input-bordered w-full",
+              class: "input input-bordered w-full #{'input-error' if character.errors[:filename].any?}",
               placeholder: "Example: clssorcerer_" %>
+          <% if character.errors[:filename].any? %>
+            <div class="text-error text-sm mt-1">
+              <%= character.errors[:filename].join(", ") %>
+            </div>
+          <% end %>
         </div>
         <div class="divider"></div>
         <div class="form-control w-full mt-5">
@@ -43,7 +60,14 @@
               <%= form.fields_for :portraits, character.portraits.find_or_initialize_by(size: size) do |portrait_form| %>
                 <div class="form-control">
                   <%= portrait_form.label :file, "#{dimensions[:name]} Portrait (TGA file, #{dimensions[:width]}x#{dimensions[:height]})", class: "label" %>
-                  <%= portrait_form.file_field :file, class: "file-input file-input-bordered w-full", accept: ".tga" %>
+                  <%= portrait_form.file_field :file,
+                      class: "file-input file-input-bordered w-full #{'file-input-error' if portrait_form.object.errors.any?}",
+                      accept: ".tga" %>
+                  <% if portrait_form.object.errors.any? %>
+                    <div class="text-error text-sm mt-1">
+                      <%= portrait_form.object.errors.full_messages.join(", ") %>
+                    </div>
+                  <% end %>
                   <%= portrait_form.hidden_field :size, value: size %>
                 </div>
               <% end %>

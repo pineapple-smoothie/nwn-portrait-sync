@@ -8,22 +8,21 @@ class PortraitDownloader
   def download
     compressed_filestream = Zip::OutputStream.write_buffer do |zos|
       @characters.each do |character|
-        character.portraits.each do |portrait|
-          next unless portrait.file.attached?
+        next unless character.portrait.attached?
 
-          filename = "#{character.filename}#{portrait.size.first.upcase}.tga"
+        [ :h, :l, :m, :s, :t ].each do |variant_name|
+          filename = "#{character.filename}#{variant_name.upcase}.tga"
           zos.put_next_entry(filename)
 
-          # Get the original TGA file
-          tga_data = portrait.download_tga
-          next unless tga_data
+          variant = character.portrait.variant(variant_name).processed
 
-          zos.write tga_data.download
+          zos.write variant.download
         end
       end
     end
 
     compressed_filestream.rewind
+
     compressed_filestream.read
   end
 end

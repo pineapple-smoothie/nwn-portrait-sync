@@ -9,7 +9,7 @@
         <% @character.portraits.each do |portrait| %>
           <div class="text-center">
             <div class="divider"><%= portrait.size.capitalize %> - <%= portrait.type[:width] %>x<%= portrait.type[:height] %></div>
-            <%= image_tag portrait.web_image, alt: "#{portrait.size} portrait", class: "mx-auto" %>
+            <%= image_tag portrait.web_variant, alt: "#{portrait.size} portrait", class: "mx-auto" %>
           </div>
         <% end %>
       </div>
