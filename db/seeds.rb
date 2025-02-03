@@ -8,14 +8,4 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-user1 = User.find_or_initialize_by(email_address: "user1@example.com")
-user1.username = "user1"
-user1.password = "password"
-user1.email_confirmed = true
-user1.save!
-
-user2 = User.find_or_initialize_by(email_address: "user2@example.com")
-user2.username = "user2"
-user2.password = "password"
-user2.email_confirmed = true
-user2.save!
+Server.find_or_create_by!(name: "Arelith")

@@ -96,12 +96,7 @@ class CharactersController < ApplicationController
           :name,
           :user_id,
           :filename,
-          portraits_attributes: [
-            :id,
-            :file,
-            :size,
-            :_destroy
-          ]
+          :server_id
         )
     end
 end

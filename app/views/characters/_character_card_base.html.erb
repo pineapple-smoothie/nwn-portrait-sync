@@ -1,0 +1,12 @@
+<div class="card w-96 bg-base-100 shadow-xl m-4">
+  <figure class="px-10 pt-10">
+    <%= image_tag "fallback.webp", class: "rounded-xl" %>
+  </figure>
+  <div class="card-body items-center text-center">
+    <h2 class="card-title"><%= character.name %></h2>
+    <p><span class="font-bold">User:</span> <%= character.user.username %></p>
+    <p><span class="font-bold">Filename:</span> <%= character.filename %></p>
+    <p><span class="font-bold">Server:</span> <%= character.server.name %></p>
+    <%= yield if block_given? %>
+  </div>
+</div>

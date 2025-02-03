@@ -27,6 +27,10 @@
               placeholder: "Example: clssorcerer_" %>
           <p class="text-sm text-gray-500 mt-1">If you already use a custom portrait filename, enter it here. If you don't, leave it blank and one will be generated for you.</p>
         </div>
+        <div class="form-control w-full">
+          <%= form.label :server_id, "Server", class: "label" %>
+          <%= form.collection_select :server_id, Server.all, :id, :name, { prompt: "Select a server" }, class: "select select-bordered w-full" %>
+        </div>
         <div class="card-actions justify-end mt-6">
           <%= form.submit class: "btn btn-primary" %>
           <%= link_to "Cancel", characters_path, class: "btn btn-ghost" %>
