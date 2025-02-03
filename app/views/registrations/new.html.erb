@@ -18,27 +18,27 @@
             <%= form.email_field :email_address,
                 required: true,
                 autofocus: true,
-                class: "input w-full" %>
+                class: "input input-bordered w-full" %>
             <p class="text-sm text-gray-500 mt-1">Your email address will not be shared with anyone, nor made visible. It is only used to send you a confirmation email. If you're extra paranoid, you can use an email address masking service like <a href="https://relay.firefox.com" target="_blank" class="link">Firefox Relay</a>.</p>
           </div>
           <div class="mb-4">
             <%= form.label :username %>
             <%= form.text_field :username,
                 required: true,
-                class: "input w-full" %>
+                class: "input input-bordered w-full" %>
             <p class="text-sm text-gray-500 mt-1">Your username will be visible to other users, so keep it anonymous.</p>
           </div>
           <div class="mb-4">
             <%= form.label :password %>
             <%= form.password_field :password,
                 required: true,
-                class: "input w-full" %>
+                class: "input input-bordered w-full" %>
           </div>
           <div class="mb-4">
             <%= form.label :password_confirmation %>
             <%= form.password_field :password_confirmation,
                 required: true,
-                class: "input w-full" %>
+                class: "input input-bordered w-full" %>
           </div>
           <div class="flex justify-center">
             <%= form.submit "Sign up", class: "btn btn-primary btn-wide" %>

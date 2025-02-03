@@ -1,0 +1,29 @@
+<% content_for :title, @character.name %>
+<div class="text-center mb-8">
+  <h1 class="text-3xl font-bold"><%= @character.name %></h1>
+</div>
+<div class="flex justify-center">
+  <div class="w-full max-w-2xl">
+    <div class="mb-4">
+      <strong>Name:</strong>
+      <%= @character.name %>
+    </div>
+    <div class="mb-4">
+      <strong>Filename:</strong>
+      <%= @character.filename %>
+    </div>
+    <div class="mb-4">
+      <strong>Portrait Images:</strong>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <% @character.portraits.each do |portrait| %>
+          <% if portrait.file.attached? %>
+            <div class="text-center">
+              <%= image_tag portrait.processed_image, alt: "#{portrait.size} portrait" %>
+              <p><%= portrait.size.capitalize %> - <%= portrait.size_dimensions[:width] %>x<%= portrait.size_dimensions[:height] %> pixels</p>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

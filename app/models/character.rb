@@ -2,16 +2,18 @@ class Character < ApplicationRecord
   belongs_to :user
   has_many :portraits, dependent: :destroy
 
+  accepts_nested_attributes_for :portraits, allow_destroy: true
+
   before_validation :generate_filename, on: :create
-  after_commit :process_variants, on: [ :create, :update ]
+
+  validates :name, presence: true
+  validates :filename, presence: true, uniqueness: true
 
   private
 
   def generate_filename
     return if self.filename.present?
 
-    filename = self.name.parameterize(separator: "_")
-    filename += "_#{self.id}_"
-    self.filename = filename
+    self.filename = SecureRandom.alphanumeric(12)
   end
 end

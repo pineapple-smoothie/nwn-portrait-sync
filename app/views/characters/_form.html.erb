@@ -21,16 +21,19 @@
               placeholder: "Enter character name" %>
         </div>
         <div class="form-control w-full">
-          <%= form.label :filename, class: "label" %>
+          <%= form.label :filename, "Filename (optional)", class: "label" %>
           <%= form.text_field :filename,
               class: "input input-bordered w-full",
-              placeholder: "Filename" %>
+              placeholder: "Example: clssorcerer_" %>
           <p class="text-sm text-gray-500 mt-1">If you already use a custom portrait filename, enter it here. If you don't, leave it blank and one will be generated for you.</p>
         </div>
-        <div class="form-control w-full">
-          <%= form.label :portrait, class: "label" %>
-          <%= form.file_field :portrait, class: "file-input file-input-bordered w-full max-w-xs" %>
-        </div>
+        <%= form.fields_for :portraits do |portrait_form| %>
+          <div class="form-control w-full">
+            <% size = Portrait::TYPES[portrait_form.object.size.to_sym] %>
+            <%= portrait_form.label :file, "Upload #{size[:name]} Portrait (#{size[:width]}x#{size[:height]} TGA file)", class: "label" %>
+            <%= portrait_form.file_field :file, class: "file-input w-full max-w-xs" %>
+          </div>
+        <% end %>
         <div class="card-actions justify-end mt-6">
           <%= form.submit class: "btn btn-primary" %>
           <%= link_to "Cancel", characters_path, class: "btn btn-ghost" %>

@@ -1,5 +1,5 @@
 class CharactersController < ApplicationController
-  before_action :set_character, only: %i[ edit update destroy ]
+  before_action :set_character, only: %i[ edit update destroy show ]
 
   after_action :verify_authorized
 
@@ -21,6 +21,14 @@ class CharactersController < ApplicationController
     authorize Character
 
     @character = Character.new
+    %w[huge].each do |size|
+      @character.portraits.build(size: size)
+    end
+  end
+
+  # GET /characters/1
+  def show
+    authorize @character
   end
 
   # GET /characters/1/edit
@@ -82,6 +90,18 @@ class CharactersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def character_params
-      params.expect(character: [ :name, :user_id, :portrait ])
+      params
+        .require(:character)
+        .permit(
+          :name,
+          :user_id,
+          :filename,
+          portraits_attributes: [
+            :id,
+            :file,
+            :size,
+            :_destroy
+          ]
+        )
     end
 end
