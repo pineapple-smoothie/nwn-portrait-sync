@@ -52,26 +52,41 @@
         <div class="form-control w-full mt-5">
           <h3 class="text-lg font-semibold mb-2">Portrait Images</h3>
           <p class="text-sm text-gray-500 mb-4">
-            Upload TGA format images for each portrait size. Images will be automatically resized to the correct dimensions.
-            If you don't upload an image for a size, a default portrait will be used.
+            Do you have a single image or 5 TGA files?
           </p>
-          <div class="space-y-4">
-            <% Portrait::TYPES.each do |size, dimensions| %>
-              <%= form.fields_for :portraits, character.portraits.find_or_initialize_by(size: size) do |portrait_form| %>
-                <div class="form-control">
-                  <%= portrait_form.label :file, "#{dimensions[:name]} Portrait (TGA file, #{dimensions[:width]}x#{dimensions[:height]})", class: "label" %>
-                  <%= portrait_form.file_field :file,
-                      class: "file-input file-input-bordered w-full #{'file-input-error' if portrait_form.object.errors.any?}",
-                      accept: ".tga" %>
-                  <% if portrait_form.object.errors.any? %>
-                    <div class="text-error text-sm mt-1">
-                      <%= portrait_form.object.errors.full_messages.join(", ") %>
+          <div role="tablist" class="tabs tabs-boxed grid grid-cols-2 mb-4">
+            <input type="radio" name="portrait_type" role="tab" class="tab w-full" aria-label="Single Image" checked />
+            <div role="tabpanel" class="tab-content col-span-2 bg-base-100 border-base-300 rounded-box p-6">
+              <p class="text-sm text-gray-500 mb-4">
+                Please use the portrait conversion tool to automatically generate all the required TGA portraits.
+              </p>
+              <%= link_to "Portrait Conversion Tool", "#", class: "btn btn-primary w-full", target: "_blank", rel: "noopener" %>
+            </div>
+            <input type="radio" name="portrait_type" role="tab" class="tab w-full" aria-label="Multiple TGA Files" />
+            <div role="tabpanel" class="tab-content col-span-2 bg-base-100 border-base-300 rounded-box p-6">
+              <p class="text-sm text-gray-500 mb-4">
+                Upload TGA format images for each portrait size. Images will be automatically resized to the correct dimensions.
+                If you don't upload an image for a size, a default portrait will be used.
+              </p>
+              <div class="space-y-4">
+                <% Portrait::TYPES.each do |size, dimensions| %>
+                  <%= form.fields_for :portraits, character.portraits.find_or_initialize_by(size: size) do |portrait_form| %>
+                    <div class="form-control">
+                      <%= portrait_form.label :file, "#{dimensions[:name]} Portrait (TGA file, #{dimensions[:width]}x#{dimensions[:height]})", class: "label" %>
+                      <%= portrait_form.file_field :file,
+                          class: "file-input file-input-bordered w-full #{'file-input-error' if portrait_form.object.errors.any?}",
+                          accept: ".tga" %>
+                      <% if portrait_form.object.errors.any? %>
+                        <div class="text-error text-sm mt-1">
+                          <%= portrait_form.object.errors.full_messages.join(", ") %>
+                        </div>
+                      <% end %>
+                      <%= portrait_form.hidden_field :size, value: size %>
                     </div>
                   <% end %>
-                  <%= portrait_form.hidden_field :size, value: size %>
-                </div>
-              <% end %>
-            <% end %>
+                <% end %>
+              </div>
+            </div>
           </div>
         </div>
         <div class="card-actions justify-end mt-6">
