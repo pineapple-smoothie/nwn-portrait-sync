@@ -12,7 +12,7 @@ class ConversionsController < ApplicationController
     @conversion.user = current_user
 
     if @conversion.save
-      redirect_to conversion_path(@conversion), notice: "Conversion was successfully created."
+      redirect_to conversion_path(@conversion)
     else
       flash.now[:alert] = "There was a problem with your image conversion."
       render :new, status: :unprocessable_entity
@@ -21,31 +21,20 @@ class ConversionsController < ApplicationController
 
   def download
     @conversion = Conversion.find(params[:id])
+    conversion_downloader = ConversionDownloader.new(@conversion)
 
-    variants = {
-      huge: @conversion.image.variant(:tga_huge).processed,
-      large: @conversion.image.variant(:tga_large).processed,
-      medium: @conversion.image.variant(:tga_medium).processed,
-      small: @conversion.image.variant(:tga_small).processed,
-      tiny: @conversion.image.variant(:tga_tiny).processed
-    }
+    # Add headers to prevent caching
+    response.headers["Cache-Control"] = "no-cache"
+    response.headers["Content-Type"] = "application/zip"
+    response.headers["Content-Disposition"] = "attachment; filename=\"conversion_#{@conversion.id}.zip\""
 
-    temp_file = Tempfile.new([ "variants", ".zip" ])
-
-    Zip::File.open(temp_file.path, Zip::File::CREATE) do |zipfile|
-      variants.each do |size, variant|
-        variant_path = variant.service.path_for(variant.key)
-        zipfile.add("portrait_#{size}.tga", variant_path)
-      end
-    end
-
-    send_data File.read(temp_file.path),
-              filename: "portrait_variants.zip",
-              type: "application/zip",
-              disposition: "attachment"
-
-    temp_file.close
-    temp_file.unlink
+    send_data(
+      conversion_downloader.download,
+      filename: "conversion_#{@conversion.id}.zip",
+      type: "application/zip",
+      disposition: "attachment",
+      stream: true # Add streaming support
+    )
   end
 
   private

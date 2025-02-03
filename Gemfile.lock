@@ -426,12 +426,12 @@ DEPENDENCIES
   capybara
   debug
   erb_lint (~> 0.8.0)
-  image_processing (~> 1.2)
+  image_processing (~> 1.13.0)
   importmap-rails
   jbuilder
   kamal
   kaminari (~> 1.2)
-  mini_magick
+  mini_magick (~> 4.13.2)
   phosphor_icons (~> 0.3.0)
   propshaft
   puma (>= 5.0)
