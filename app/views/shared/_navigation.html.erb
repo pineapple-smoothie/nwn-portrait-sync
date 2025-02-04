@@ -12,6 +12,7 @@
   <div class="flex-none">
     <ul class="menu menu-horizontal px-1">
       <% if authenticated? %>
+        <li><%= link_to "Add new character", new_character_path, class: "btn btn-sm btn-primary btn-outline mx-2" %></li>
         <li><%= link_to "Convert portrait to TGAs", new_conversion_path, class: 'btn btn-sm btn-primary btn-outline mx-2' %></li>
         <li><%= link_to "Download All Portraits", download_all_portraits_characters_path, class: "btn btn-sm btn-accent btn-outline mx-2", data: { turbo: false } %></li>
         <li>

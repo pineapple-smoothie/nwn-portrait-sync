@@ -8,9 +8,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :registrations, only: [ :new, :create ] do
-    get :confirm, on: :collection
-  end
+  resources :registrations, only: [ :new, :create ]
 
   resources :conversions, only: [ :new, :create ] do
     member do
