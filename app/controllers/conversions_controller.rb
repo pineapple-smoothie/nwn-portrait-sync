@@ -1,10 +1,7 @@
 class ConversionsController < ApplicationController
-  def show
-    @conversion = Conversion.find(params[:id])
-  end
-
   def new
     @conversion = Conversion.new
+    @previous_conversion = Conversion.find(params[:conversion_id]) if params[:conversion_id].present?
   end
 
   def create
@@ -12,7 +9,8 @@ class ConversionsController < ApplicationController
     @conversion.user = current_user
 
     if @conversion.save
-      redirect_to conversion_path(@conversion)
+      flash.now[:success] = "Conversion successful!"
+      redirect_to new_conversion_path(conversion_id: @conversion.id)
     else
       flash.now[:alert] = "There was a problem with your image conversion."
       render :new, status: :unprocessable_entity

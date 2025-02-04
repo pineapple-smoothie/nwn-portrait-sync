@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     get :confirm, on: :collection
   end
 
-  resources :conversions, only: [ :show, :new, :create ] do
+  resources :conversions, only: [ :new, :create ] do
     member do
       get :download
     end

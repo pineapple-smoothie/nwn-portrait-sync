@@ -1,7 +1,0 @@
-<% content_for :title, "Conversion #{@conversion.id}" %>
-<div class="text-center mb-8">
-  <h1 class="text-3xl font-bold">Conversion <%= @conversion.id %></h1>
-</div>
-<div class="flex justify-center w-full max-w-2xl">
-  <%= link_to "Download", download_conversion_path(@conversion), class: "btn btn-primary", data: { turbo: false } %>
-</div>
