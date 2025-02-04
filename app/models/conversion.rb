@@ -10,7 +10,9 @@ class Conversion < ApplicationRecord
       flatten: true,
       alpha: "off",
       format: :tga,
-      define: "tga:alpha-type=0"
+      orient: "bottom-left",
+      flip: true,
+      define: "tga:alpha-type=0 tga:image-type=2 tga:origin=bottom-left"
 
     attachable.variant :tga_large,
       resize_to_fill: [ 128, 200 ],
@@ -20,7 +22,9 @@ class Conversion < ApplicationRecord
       flatten: true,
       alpha: "off",
       format: :tga,
-      define: "tga:alpha-type=0"
+      orient: "bottom-left",
+      flip: true,
+      define: "tga:alpha-type=0 tga:image-type=2 tga:origin=bottom-left"
 
     attachable.variant :tga_medium,
       resize_to_fill: [ 64, 100 ],
@@ -30,7 +34,9 @@ class Conversion < ApplicationRecord
       flatten: true,
       alpha: "off",
       format: :tga,
-      define: "tga:alpha-type=0"
+      orient: "bottom-left",
+      flip: true,
+      define: "tga:alpha-type=0 tga:image-type=2 tga:origin=bottom-left"
 
     attachable.variant :tga_small,
       resize_to_fill: [ 32, 50 ],
@@ -40,7 +46,9 @@ class Conversion < ApplicationRecord
       flatten: true,
       alpha: "off",
       format: :tga,
-      define: "tga:alpha-type=0"
+      orient: "bottom-left",
+      flip: true,
+      define: "tga:alpha-type=0 tga:image-type=2 tga:origin=bottom-left"
 
     attachable.variant :tga_tiny,
       resize_to_fill: [ 16, 25 ],
@@ -50,7 +58,9 @@ class Conversion < ApplicationRecord
       flatten: true,
       alpha: "off",
       format: :tga,
-      define: "tga:alpha-type=0"
+      orient: "bottom-left",
+      flip: true,
+      define: "tga:alpha-type=0 tga:image-type=2 tga:origin=bottom-left"
   end
 
   validates :image, attached: true
