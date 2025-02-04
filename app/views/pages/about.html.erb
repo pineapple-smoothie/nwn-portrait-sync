@@ -1,4 +1,4 @@
-<div class="max-w-3xl mx-auto px-4 py-8">
+<div class="max-w-5xl mx-auto px-4 py-8">
   <!-- Hero section -->
   <div class="text-center mb-12">
     <h1 class="text-4xl font-bold text-primary mb-4">Neverwinter Nights Portrait Share</h1>
@@ -13,27 +13,51 @@
       <%= link_to "Sign In", new_session_path, class: "btn btn-outline btn-lg" %>
     <% end %>
   </div>
+  <!-- Stats -->
+  <h2 class="text-3xl mb-4 text-center">Some stats</h2>
   <div class="card bg-base-200 mb-12">
     <div class="card-body">
-      <h2 class="card-title text-2xl">Some stats</h2>
       <div class="stats shadow">
+        <div class="stat">
+          <div class="stat-title"><%= phosphor_icon "hard-drives", height: 48 %> Servers</div>
+          <div class="stat-value"><%= Server.count %></div>
+        </div>
         <div class="stat">
           <div class="stat-title"><%= phosphor_icon "users", height: 48 %> Users</div>
           <div class="stat-value"><%= User.count %></div>
+        </div>
+        <div class="stat">
+          <div class="stat-title"><%= phosphor_icon "image-square", height: 48 %> Conversions</div>
+          <div class="stat-value"><%= Conversion.count %></div>
         </div>
         <div class="stat">
           <div class="stat-title"><%= phosphor_icon "mask-happy", height: 48 %> Characters</div>
           <div class="stat-value"><%= Character.count %></div>
         </div>
         <div class="stat">
-          <div class="stat-title"><%= phosphor_icon "download", height: 48 %> Total downloads</div>
+          <div class="stat-title"><%= phosphor_icon "download", height: 48 %> Downloads</div>
           <div class="stat-value"><%= Download.count %></div>
         </div>
       </div>
     </div>
   </div>
   <!-- Features grid -->
-  <div class="grid md:grid-cols-2 gap-8 mb-12">
+  <h2 class="text-3xl mb-4 text-center">How to use the app</h2>
+  <ul class="steps steps-horizontal w-full my-4">
+    <li class="step step-primary">Convert</li>
+    <li class="step step-primary">Upload</li>
+    <li class="step step-primary">Download</li>
+  </ul>
+  <div class="grid md:grid-cols-3 gap-8 mb-12">
+    <div class="card bg-base-200">
+      <div class="card-body">
+        <h2 class="card-title text-2xl">(Optional) Convert Your Portrait</h2>
+        <ol class="list-decimal ml-5 space-y-2">
+          <li>Use this if you only have a single JPEG/PNG/WEBP portrait</li>
+          <li>Use the <%= link_to "conversion tool", new_conversion_path, class: 'link' %> to get the required TGA files</li>
+        </ol>
+      </div>
+    </div>
     <div class="card bg-base-200">
       <div class="card-body">
         <h2 class="card-title text-2xl">Upload Your Portrait</h2>
@@ -58,21 +82,30 @@
     </div>
   </div>
   <!-- Portrait folder locations -->
+  <h2 class="text-3xl mb-4 text-center">Where are my Neverwinter Nights portraits?</h2>
   <div class="card bg-base-200">
     <div class="card-body">
-      <h2 class="card-title text-2xl mb-4">Portrait Folder Location</h2>
       <div class="grid gap-4">
-        <div>
-          <span class="font-bold">Windows:</span>
-          <code class="block bg-base-300 p-2 rounded mt-1">C:\Users\YOUR_USERNAME\Documents\Neverwinter Nights\Portraits</code>
+        <div class="flex items-center gap-2">
+          <%= phosphor_icon "windows-logo", height: 48 %>
+          <div class="flex-1">
+            <span class="font-bold">Windows:</span>
+            <code class="block bg-base-300 p-2 rounded mt-1">C:\Users\YOUR_USERNAME\Documents\Neverwinter Nights\Portraits</code>
+          </div>
         </div>
-        <div>
-          <span class="font-bold">macOS:</span>
-          <code class="block bg-base-300 p-2 rounded mt-1">~/Library/Application Support/Neverwinter Nights/Portraits</code>
+        <div class="flex items-center gap-2">
+          <%= phosphor_icon "apple-logo", height: 48 %>
+          <div class="flex-1">
+            <span class="font-bold">macOS:</span>
+            <code class="block bg-base-300 p-2 rounded mt-1">~/Library/Application Support/Neverwinter Nights/Portraits</code>
+          </div>
         </div>
-        <div>
-          <span class="font-bold">Linux:</span>
-          <code class="block bg-base-300 p-2 rounded mt-1">~/.local/share/Neverwinter Nights/Portraits</code>
+        <div class="flex items-center gap-2">
+          <%= phosphor_icon "linux-logo", height: 48 %>
+          <div class="flex-1">
+            <span class="font-bold">Linux:</span>
+            <code class="block bg-base-300 p-2 rounded mt-1">~/.local/share/Neverwinter Nights/Portraits</code>
+          </div>
         </div>
       </div>
     </div>

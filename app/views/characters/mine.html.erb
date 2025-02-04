@@ -4,8 +4,16 @@
   <h1 class="text-3xl font-bold">My Characters</h1>
 </div>
 <div class="flex flex-wrap justify-center" id="characters">
-  <% @characters.each do |character| %>
-    <%= render partial: "my_character_card", locals: { character: character } %>
+  <% if @characters.any? %>
+    <% @characters.each do |character| %>
+      <%= render partial: "my_character_card", locals: { character: character } %>
+    <% end %>
+  <% else %>
+    <div class="text-center py-12">
+      <%= phosphor_icon "mask-happy", height: 64, class: "mx-auto mb-4 text-gray-400" %>
+      <h3 class="text-xl font-medium text-gray-600 mb-4">You don't have any characters yet!</h3>
+      <%= link_to "Create your first character", new_character_path, class: "btn btn-primary" %>
+    </div>
   <% end %>
 </div>
 <%= paginate @characters %>
