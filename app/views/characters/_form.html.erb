@@ -17,19 +17,36 @@
         <div class="form-control w-full mt-5">
           <%= form.label :name, class: "label" %>
           <%= form.text_field :name,
-              class: "input input-bordered w-full",
+              class: "input input-bordered w-full #{'input-error' if character.errors[:name].any?}",
               placeholder: "Enter character name" %>
+          <% if character.errors[:name].any? %>
+            <div class="text-error text-sm mt-1">
+              <%= character.errors[:name].join(", ") %>
+            </div>
+          <% end %>
         </div>
         <div class="form-control w-full mt-5">
           <%= form.label :server_id, "Server", class: "label" %>
-          <%= form.collection_select :server_id, Server.order(:name), :id, :name, { selected: Server.order(:name).first&.id }, class: "select select-bordered w-full" %>
+          <%= form.collection_select :server_id, Server.order(:name), :id, :name,
+              { selected: Server.order(:name).first&.id },
+              class: "select select-bordered w-full #{'select-error' if character.errors[:server_id].any?}" %>
+          <% if character.errors[:server_id].any? %>
+            <div class="text-error text-sm mt-1">
+              <%= character.errors[:server_id].join(", ") %>
+            </div>
+          <% end %>
         </div>
         <div class="form-control w-full mt-5">
           <%= form.label :filename, "Filename (optional)", class: "label" %>
           <p class="text-sm text-gray-500 my-2">If you already know your custom portrait filename, enter it here. If you don't, leave it blank and one will be generated for you.</p>
           <%= form.text_field :filename,
-              class: "input input-bordered w-full",
+              class: "input input-bordered w-full #{'input-error' if character.errors[:filename].any?}",
               placeholder: "Example: clssorcerer_" %>
+          <% if character.errors[:filename].any? %>
+            <div class="text-error text-sm mt-1">
+              <%= character.errors[:filename].join(", ") %>
+            </div>
+          <% end %>
         </div>
         <div class="divider"></div>
         <div class="form-control w-full mt-5">
@@ -38,41 +55,28 @@
             Upload TGA format images for each portrait size. Images will be automatically resized to the correct dimensions.
             If you don't upload an image for a size, a default portrait will be used.
           </p>
+          <%= link_to new_conversion_path, class: "btn btn-primary btn-outline w-full mb-6", target: "_blank", rel: "noopener" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m6.75 12H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+            </svg>
+            I don't have 5 TGA files! Please convert my portrait image 🥺
+          <% end %>
           <div class="space-y-4">
-            <%= form.fields_for :portraits, character.portraits.find_or_initialize_by(size: :huge) do |portrait_form| %>
-              <div class="form-control">
-                <%= portrait_form.label :file, "Huge Portrait (TGA file, 256x512)", class: "label" %>
-                <%= portrait_form.file_field :file, class: "file-input file-input-bordered w-full", accept: ".tga" %>
-                <%= portrait_form.hidden_field :size, value: :huge %>
-              </div>
-            <% end %>
-            <%= form.fields_for :portraits, character.portraits.find_or_initialize_by(size: :large) do |portrait_form| %>
-              <div class="form-control">
-                <%= portrait_form.label :file, "Large Portrait (TGA file, 128x256)", class: "label" %>
-                <%= portrait_form.file_field :file, class: "file-input file-input-bordered w-full", accept: ".tga" %>
-                <%= portrait_form.hidden_field :size, value: :large %>
-              </div>
-            <% end %>
-            <%= form.fields_for :portraits, character.portraits.find_or_initialize_by(size: :medium) do |portrait_form| %>
-              <div class="form-control">
-                <%= portrait_form.label :file, "Medium Portrait (TGA file, 64x128)", class: "label" %>
-                <%= portrait_form.file_field :file, class: "file-input file-input-bordered w-full", accept: ".tga" %>
-                <%= portrait_form.hidden_field :size, value: :medium %>
-              </div>
-            <% end %>
-            <%= form.fields_for :portraits, character.portraits.find_or_initialize_by(size: :small) do |portrait_form| %>
-              <div class="form-control">
-                <%= portrait_form.label :file, "Small Portrait (TGA file, 32x64)", class: "label" %>
-                <%= portrait_form.file_field :file, class: "file-input file-input-bordered w-full", accept: ".tga" %>
-                <%= portrait_form.hidden_field :size, value: :small %>
-              </div>
-            <% end %>
-            <%= form.fields_for :portraits, character.portraits.find_or_initialize_by(size: :tiny) do |portrait_form| %>
-              <div class="form-control">
-                <%= portrait_form.label :file, "Tiny Portrait (TGA file, 16x32)", class: "label" %>
-                <%= portrait_form.file_field :file, class: "file-input file-input-bordered w-full", accept: ".tga" %>
-                <%= portrait_form.hidden_field :size, value: :tiny %>
-              </div>
+            <% Portrait::TYPES.each do |size, dimensions| %>
+              <%= form.fields_for :portraits, character.portraits.find_or_initialize_by(size: size) do |portrait_form| %>
+                <div class="form-control">
+                  <%= portrait_form.label :file, "#{dimensions[:name]} Portrait (TGA file, #{dimensions[:width]}x#{dimensions[:height]})", class: "label" %>
+                  <%= portrait_form.file_field :file,
+                      class: "file-input file-input-bordered w-full #{'file-input-error' if portrait_form.object.errors.any?}",
+                      accept: ".tga" %>
+                  <% if portrait_form.object.errors.any? %>
+                    <div class="text-error text-sm mt-1">
+                      <%= portrait_form.object.errors.full_messages.join(", ") %>
+                    </div>
+                  <% end %>
+                  <%= portrait_form.hidden_field :size, value: size %>
+                </div>
+              <% end %>
             <% end %>
           </div>
         </div>

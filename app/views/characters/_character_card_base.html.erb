@@ -1,7 +1,7 @@
 <div class="card w-96 bg-base-100 shadow-xl m-4">
   <figure class="px-10 pt-10">
     <% if huge_portrait = character.portraits.find_by(size: :huge) %>
-      <%= image_tag huge_portrait.web_image, class: "rounded-xl", alt: "#{character.name} portrait" %>
+      <%= image_tag huge_portrait.web_variant, class: "rounded-xl", alt: "#{character.name} portrait" %>
     <% else %>
       <%= image_tag "fallback.webp", class: "rounded-xl", alt: "Default portrait" %>
     <% end %>

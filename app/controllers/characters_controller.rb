@@ -46,6 +46,10 @@ class CharactersController < ApplicationController
     if @character.save
       redirect_to character_path(@character), notice: "Character was successfully created."
     else
+      # Ensure portraits exist for all sizes when re-rendering the form
+      Portrait::TYPES.keys.each do |size|
+        @character.portraits.find_or_initialize_by(size: size)
+      end
       render :new, status: :unprocessable_entity
     end
   end
@@ -57,6 +61,10 @@ class CharactersController < ApplicationController
     if @character.update(character_params)
       redirect_to character_path(@character), notice: "Character was successfully updated."
     else
+      # Ensure portraits exist for all sizes when re-rendering the form
+      Portrait::TYPES.keys.each do |size|
+        @character.portraits.find_or_initialize_by(size: size)
+      end
       render :edit, status: :unprocessable_entity
     end
   end
@@ -73,6 +81,7 @@ class CharactersController < ApplicationController
     end
   end
 
+  # TODO: THIS DOES NOT REALLY BELONG HERE!
   def download_all_portraits
     authorize Character
 

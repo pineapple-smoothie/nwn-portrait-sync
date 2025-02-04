@@ -44,6 +44,12 @@ GEM
       erubi (~> 1.11)
       rails-dom-testing (~> 2.2)
       rails-html-sanitizer (~> 1.6)
+    active_storage_validations (2.0.2)
+      activejob (>= 6.1.4)
+      activemodel (>= 6.1.4)
+      activestorage (>= 6.1.4)
+      activesupport (>= 6.1.4)
+      marcel (>= 1.0.3)
     activejob (8.0.1)
       activesupport (= 8.0.1)
       globalid (>= 0.3.6)
@@ -413,18 +419,19 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  active_storage_validations
   bcrypt (~> 3.1.7)
   bootsnap
   brakeman
   capybara
   debug
   erb_lint (~> 0.8.0)
-  image_processing (~> 1.2)
+  image_processing (~> 1.13.0)
   importmap-rails
   jbuilder
   kamal
   kaminari (~> 1.2)
-  mini_magick
+  mini_magick (~> 4.13.2)
   phosphor_icons (~> 0.3.0)
   propshaft
   puma (>= 5.0)
