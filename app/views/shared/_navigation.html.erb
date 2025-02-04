@@ -6,13 +6,14 @@
       <% if authenticated? %>
         <li><%= link_to "All Characters", characters_path %></li>
         <li><%= link_to "My Characters", mine_characters_path %></li>
-        <li><%= link_to "Convert image to TGAs", new_conversion_path %></li>
       <% end %>
     </ul>
   </div>
   <div class="flex-none">
     <ul class="menu menu-horizontal px-1">
       <% if authenticated? %>
+        <li><%= link_to "Convert portrait to TGAs", new_conversion_path, class: 'btn btn-sm btn-primary btn-outline mx-2' %></li>
+        <li><%= link_to "Download All Portraits", download_all_portraits_characters_path, class: "btn btn-sm btn-accent btn-outline mx-2", data: { turbo: false } %></li>
         <li>
           <details class="dropdown">
             <summary><%= current_user.username %></summary>
