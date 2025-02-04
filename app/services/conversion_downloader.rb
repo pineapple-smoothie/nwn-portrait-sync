@@ -10,7 +10,7 @@ class ConversionDownloader
       # Get all variants for this conversion
 
       variants = [ :tga_huge, :tga_large, :tga_medium, :tga_small, :tga_tiny ]
-      labels = [ "H", "L", "M", "S", "T" ]
+      labels = [ "converted_H", "converted_L", "converted_M", "converted_S", "converted_T" ]
 
       variants.zip(labels).each do |variant, label|
         zos.put_next_entry("#{label}.tga")

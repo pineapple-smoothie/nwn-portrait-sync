@@ -7,40 +7,60 @@ class Conversion < ApplicationRecord
       gravity: "north",
       extent: "256x512",
       background: "black",
+      flatten: true,
+      alpha: "off",
       format: :tga,
-      alpha: "remove"
+      orient: "bottom-left",
+      flip: true,
+      define: "tga:alpha-type=0 tga:image-type=2 tga:origin=bottom-left"
 
     attachable.variant :tga_large,
       resize_to_fill: [ 128, 200 ],
       gravity: "north",
       extent: "128x256",
       background: "black",
+      flatten: true,
+      alpha: "off",
       format: :tga,
-      alpha: "remove"
+      orient: "bottom-left",
+      flip: true,
+      define: "tga:alpha-type=0 tga:image-type=2 tga:origin=bottom-left"
 
     attachable.variant :tga_medium,
       resize_to_fill: [ 64, 100 ],
       gravity: "north",
       extent: "64x128",
       background: "black",
+      flatten: true,
+      alpha: "off",
       format: :tga,
-      alpha: "remove"
+      orient: "bottom-left",
+      flip: true,
+      define: "tga:alpha-type=0 tga:image-type=2 tga:origin=bottom-left"
 
     attachable.variant :tga_small,
       resize_to_fill: [ 32, 50 ],
       gravity: "north",
       extent: "32x64",
       background: "black",
+      flatten: true,
+      alpha: "off",
       format: :tga,
-      alpha: "remove"
+      orient: "bottom-left",
+      flip: true,
+      define: "tga:alpha-type=0 tga:image-type=2 tga:origin=bottom-left"
 
     attachable.variant :tga_tiny,
       resize_to_fill: [ 16, 25 ],
       gravity: "north",
       extent: "16x32",
       background: "black",
+      flatten: true,
+      alpha: "off",
       format: :tga,
-      alpha: "remove"
+      orient: "bottom-left",
+      flip: true,
+      define: "tga:alpha-type=0 tga:image-type=2 tga:origin=bottom-left"
   end
 
   validates :image, attached: true
