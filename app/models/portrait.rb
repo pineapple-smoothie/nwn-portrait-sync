@@ -111,7 +111,8 @@ class Portrait < ApplicationRecord
 
         # Create variant from the PNG version
         variant = png_blob.variant(
-          resize_to_fill: [ type[:display_width], type[:display_height], { gravity: "north", flip: true } ],
+          resize_to_fill: [ type[:display_width], type[:display_height], { gravity: "north" } ],
+          flip: true,
           format: :webp
         ).processed
 
