@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   resources :registrations, only: [ :new, :create ]
 
-  resources :conversions, only: [ :new, :create ] do
+  resources :conversions, only: [ :new, :create, :show ] do
     member do
       get :download
     end

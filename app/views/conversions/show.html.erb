@@ -1,0 +1,4 @@
+<%= turbo_frame_tag "conversion_form" do %>
+  <h3 class="text-lg font-bold text-success">Conversion successful!</h3>
+  <%= link_to "Download TGA files", download_conversion_path(@conversion), class: "btn btn-success", data: { turbo: false } %>
+<% end %>
