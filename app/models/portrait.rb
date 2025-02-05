@@ -16,10 +16,10 @@ class Portrait < ApplicationRecord
 
   validates :file, attached: false
   validates :file, content_type: { in: [ :tga ], spoofing_protection: false }
-  validates :file, dimension: {
-    width: { min: ->(record) { record.type[:width] },   max: ->(record) { record.type[:width] } },
-    height: { min: ->(record) { record.type[:height] }, max: ->(record) { record.type[:height] } }
-  }, if: :file_attached?
+  # validates :file, dimension: {
+  #   width: { min: ->(record) { record.type[:width] },   max: ->(record) { record.type[:width] } },
+  #   height: { min: ->(record) { record.type[:height] }, max: ->(record) { record.type[:height] } }
+  # }, if: :file_attached?
 
   TYPES = {
     huge: {
