@@ -1,4 +1,4 @@
-# Neverwinter Nights Portrait Sync
+# Neverwinter Nights Portrait Share
 
 ## What is this?
 
