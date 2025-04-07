@@ -40,9 +40,13 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.14.0"
 
-gem "rubyzip"
-
+gem "active_storage_validations"
+gem "erb_lint", "~> 0.9.0"
+gem "kaminari", "~> 1.2"
 gem "mini_magick", "~> 4.13.2"
+gem "phosphor_icons", "~> 0.3.0"
+gem "pundit", "~> 2.4"
+gem "rubyzip"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -66,13 +70,3 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
-
-gem "erb_lint", "~> 0.9.0"
-
-gem "kaminari", "~> 1.2"
-
-gem "pundit", "~> 2.4"
-
-gem "phosphor_icons", "~> 0.3.0"
-
-gem "active_storage_validations"
