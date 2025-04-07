@@ -66,7 +66,7 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "erb_lint", "~> 0.8.0"
+gem "erb_lint", "~> 0.9.0"
 
 gem "kaminari", "~> 1.2"
 
