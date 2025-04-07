@@ -8,9 +8,9 @@
   </figure>
   <div class="card-body items-center text-center">
     <h2 class="card-title"><%= character.name %></h2>
-    <p><span class="font-bold">User:</span> <%= character.user.username %></p>
-    <p><span class="font-bold">Filename:</span> <%= character.filename %></p>
-    <p><span class="font-bold">Server:</span> <%= character.server.name %></p>
+    <p><span class="font-bold">User:</span> <%= truncate(character.user.username, length: 30) %></p>
+    <p><span class="font-bold">Filename:</span> <%= truncate(character.filename, length: 30) %></p>
+    <p><span class="font-bold">Server:</span> <%= truncate(character.server.name, length: 30) %></p>
     <%= yield if block_given? %>
   </div>
 </div>
