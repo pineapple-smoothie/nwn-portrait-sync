@@ -1,3 +1,21 @@
+# == Schema Information
+#
+# Table name: portraits
+#
+#  id           :integer          not null, primary key
+#  size         :integer          default("huge"), not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  character_id :integer          not null
+#
+# Indexes
+#
+#  index_portraits_on_character_id  (character_id)
+#
+# Foreign Keys
+#
+#  character_id  (character_id => characters.id)
+#
 class Portrait < ApplicationRecord
   belongs_to :character
 
