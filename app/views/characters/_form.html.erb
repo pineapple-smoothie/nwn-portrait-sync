@@ -65,10 +65,10 @@
             <% Portrait::TYPES.each do |size, dimensions| %>
               <%= form.fields_for :portraits, character.portraits.find_or_initialize_by(size: size) do |portrait_form| %>
                 <div class="form-control">
-                  <%= portrait_form.label :file, "#{dimensions[:name]} Portrait (TGA file, #{dimensions[:width]}x#{dimensions[:height]})", class: "label" %>
+                  <%= portrait_form.label :file, "#{dimensions[:name]} Portrait (TGA or DDS file, #{dimensions[:width]}x#{dimensions[:height]})", class: "label" %>
                   <%= portrait_form.file_field :file,
                       class: "file-input file-input-bordered w-full #{'file-input-error' if portrait_form.object.errors.any?}",
-                      accept: ".tga" %>
+                      accept: ".tga, .dds" %>
                   <% if portrait_form.object.errors.any? %>
                     <div class="text-error text-sm mt-1">
                       <%= portrait_form.object.errors.full_messages.join(", ") %>
